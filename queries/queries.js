@@ -12,6 +12,7 @@ const updateUser =
 // =============================HANDYMAN=============================
 const getHandyman = "SELECT * FROM hm_profile";
 const getHandymanById = "SELECT * FROM hm_profile WHERE id = $1";
+const getHandymanByUsername = "SELECT * FROM hm_profile WHERE username = $1";
 const checkHandymanEmailExists =
   "SELECT s FROM hm_profile s WHERE s.email = $1";
 const checkHandymanUsernameExists =
@@ -79,4 +80,5 @@ module.exports = {
   filterServicesByCategory,
   filterJobRequestsByUser,
   getAllRatingsForHMByIdAndStatus,
+  getHandymanByUsername,
 };

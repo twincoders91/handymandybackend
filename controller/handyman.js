@@ -9,6 +9,14 @@ const getHandyman = (req, res) => {
   });
 };
 
+const getHandymanByUsername = (req, res) => {
+  const username = req.params.username;
+  pool.query(queries.getHandymanByUsername, [username], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 const getHandymanById = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query(queries.getHandymanById, [id], (error, results) => {
@@ -122,4 +130,5 @@ module.exports = {
   addHandyman,
   updateHandyman,
   getAllRatingsForHMByIdAndStatus,
+  getHandymanByUsername,
 };
