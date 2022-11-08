@@ -124,6 +124,15 @@ const getAllRatingsForHMByIdAndStatus = (req, res) => {
   );
 };
 
+const getHandymanRatingsSummary = (req, res) => {
+  const id = req.params.id;
+
+  pool.query(queries.getHandymanRatingsSummary, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 module.exports = {
   getHandyman,
   getHandymanById,
@@ -131,4 +140,5 @@ module.exports = {
   updateHandyman,
   getAllRatingsForHMByIdAndStatus,
   getHandymanByUsername,
+  getHandymanRatingsSummary,
 };

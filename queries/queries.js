@@ -49,9 +49,8 @@ const filterJobRequestsByUser =
 // =============================RATINGS=============================
 const getAllRatingsForHMByIdAndStatus =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.id = jobs.status_id WHERE jobs.status_id = 4 AND hm_id = $1";
-
-// const getAggregatedRatingsForHMByIdAndStatus =
-//   "SELECT SUM(ratings_id) AS total_ratings FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.id = jobs.status_id WHERE jobs.status_id = 4 AND hm_id = $1";
+const getHandymanRatingsSummary =
+  "SELECT SUM(ratings_id) AS total_ratings, COUNT(*) AS total_jobs, ROUND(SUM(ratings_id)/COUNT(*), 1) AS average_rating FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.id = jobs.status_id WHERE jobs.status_id = 4 AND hm_id = $1;";
 // ==================================================================
 
 module.exports = {
@@ -81,4 +80,5 @@ module.exports = {
   filterJobRequestsByUser,
   getAllRatingsForHMByIdAndStatus,
   getHandymanByUsername,
+  getHandymanRatingsSummary,
 };

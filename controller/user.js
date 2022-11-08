@@ -19,7 +19,8 @@ const getUserById = (req, res) => {
 const validateUsername = (req, res) => {
   const username = req.params.username;
   pool.query(queries.checkUsernameExists, [username], (error, results) => {
-    if (results.rows.length) {
+    if (error) throw error;
+    else if (results.rows.length) {
       return res.json("Username already exists");
     } else {
       return res.json("available");
