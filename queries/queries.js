@@ -39,18 +39,28 @@ const filterServicesByCategory =
 // =============================JOBS=============================
 const getJobs = "SELECT * FROM jobs";
 const createJob =
-  "INSERT INTO jobs (user_id, services_id, ratings_id, status_id) VALUES ($1, $2, $3, $4)";
+  "INSERT INTO jobs (user_id, services_id, status_id) VALUES ($1, $2, $3)";
 const removeJobById = "DELETE FROM jobs WHERE id = $1";
-const updateJobById =
-  "UPDATE jobs SET ratings_id = $1, status_id = $2 WHERE id = $3";
+const updateJobById = "UPDATE jobs SET status_id = $1 WHERE id = $2";
 const filterJobRequestsByUser =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.id = jobs.status_id WHERE jobs.user_id =$1";
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.user_id =$1";
+const filterJobRequestsByHM =
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+const filterJobRequestByHMWithUserProfile =
+  "SELECT *, hm_profile.id AS hm_id, hm_profile.username AS hm_username, hm_profile.first_name AS hm_first_name, hm_profile.last_name AS hm_last_name, hm_profile.email AS hm_email, hm_profile.profile_image AS hm_profile_image FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+// const filterJobRequestByHMWithUserProfile =
+//   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+// const filterJobRequestByHMWithUserProfile =
+//   "SELECT hm_profile.id AS hm_id, user_profile.id AS user_id, hm_profile.first_name AS hm_first_name, user_profile.first_name AS user_first_name FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+
+// =============================REVIEWS=============================
+// const getReviews = "SELECT * FROM reviews";
 
 // =============================RATINGS=============================
 const getAllRatingsForHMByIdAndStatus =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.id = jobs.status_id WHERE jobs.status_id = 4 AND hm_id = $1";
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'pending' AND hm_id = $1";
 const getHandymanRatingsSummary =
-  "SELECT SUM(ratings_id) AS total_ratings, COUNT(*) AS total_jobs, ROUND(SUM(ratings_id)/COUNT(*), 1) AS average_rating FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.id = jobs.status_id WHERE jobs.status_id = 4 AND hm_id = $1;";
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
 // ==================================================================
 
 module.exports = {
@@ -81,4 +91,7 @@ module.exports = {
   getAllRatingsForHMByIdAndStatus,
   getHandymanByUsername,
   getHandymanRatingsSummary,
+  filterJobRequestsByHM,
+  filterJobRequestByHMWithUserProfile,
+  // getReviews,
 };

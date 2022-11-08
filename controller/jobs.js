@@ -9,11 +9,11 @@ const getJobs = (req, res) => {
 };
 
 const createJob = (req, res) => {
-  const { user_id, services_id, ratings_id, status_id } = req.body;
+  const { user_id, services_id, status_id } = req.body;
 
   pool.query(
     queries.createJob,
-    [user_id, services_id, ratings_id, status_id],
+    [user_id, services_id, status_id],
     (error, results) => {
       if (error) throw error;
       res.status(201).send("Job created successfully!");
@@ -33,16 +33,12 @@ const removeJobById = (req, res) => {
 
 const updateJobById = (req, res) => {
   const id = parseInt(req.body.id);
-  const { ratings_id, status_id } = req.body;
+  const { status_id } = req.body;
 
-  pool.query(
-    queries.updateJobById,
-    [ratings_id, status_id, id],
-    (error, results) => {
-      if (error) throw error;
-      res.status(200).send("Job updated successfully!");
-    }
-  );
+  pool.query(queries.updateJobById, [status_id, id], (error, results) => {
+    if (error) throw error;
+    res.status(200).send(results);
+  });
 };
 
 const filterJobRequestsByUser = (req, res) => {
@@ -53,6 +49,27 @@ const filterJobRequestsByUser = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
+const filterJobRequestsByHM = (req, res) => {
+  const { id } = req.params;
+
+  pool.query(queries.filterJobRequestsByHM, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
+const filterJobRequestByHMWithUserProfile = (req, res) => {
+  const { id } = req.params;
+
+  pool.query(
+    queries.filterJobRequestByHMWithUserProfile,
+    [id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    }
+  );
+};
 
 module.exports = {
   getJobs,
@@ -60,4 +77,6 @@ module.exports = {
   removeJobById,
   updateJobById,
   filterJobRequestsByUser,
+  filterJobRequestsByHM,
+  filterJobRequestByHMWithUserProfile,
 };
