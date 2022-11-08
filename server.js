@@ -10,6 +10,7 @@ const jobsRoutes = require("./router/jobsData");
 
 //middleware to allow us to POST and get JSON from our endpoints.
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("hello world!");

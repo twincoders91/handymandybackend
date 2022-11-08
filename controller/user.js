@@ -16,6 +16,17 @@ const getUserById = (req, res) => {
   });
 };
 
+const validateUsername = (req, res) => {
+  const username = req.params.username;
+  pool.query(queries.checkUsernameExists, [username], (error, results) => {
+    if (results.rows.length) {
+      return res.json("Username already exists");
+    } else {
+      return res.json("available");
+    }
+  });
+};
+
 const addUser = (req, res) => {
   const {
     username,
@@ -117,6 +128,7 @@ const updateUser = (req, res) => {
 };
 
 module.exports = {
+  validateUsername,
   getUser,
   getUserById,
   addUser,
