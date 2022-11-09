@@ -51,6 +51,7 @@ const addUser = (req, res) => {
       if (results.rows.length) {
         return res.send("Username already exists.");
       }
+
       // add User to db
       pool.query(
         queries.addUser,
@@ -128,6 +129,19 @@ const updateUser = (req, res) => {
   });
 };
 
+const createUserRatings = (req, res) => {
+  const { ratings, reviews, jobs_id } = req.body;
+
+  pool.query(
+    queries.createUserRatingsByJobID,
+    [ratings, reviews, jobs_id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(201).send("Ratings and Reviews submitted Successfully!");
+    }
+  );
+};
+
 module.exports = {
   validateUsername,
   getUser,
@@ -135,4 +149,5 @@ module.exports = {
   addUser,
   removeUser,
   updateUser,
+  createUserRatings,
 };

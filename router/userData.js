@@ -9,5 +9,6 @@ router.get("/validate/:username", controller.validateUsername);
 router.get("/:id", controller.getUserById);
 router.put("/:id", controller.updateUser);
 router.delete("/:id", controller.removeUser);
+router.post("/ratings", controller.createUserRatings);
 
 module.exports = router;

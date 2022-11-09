@@ -25,6 +25,34 @@ const getHandymanById = (req, res) => {
   });
 };
 
+const validateUsername = (req, res) => {
+  const username = req.params.username;
+  pool.query(
+    queries.checkHandymanUsernameExists,
+    [username],
+    (error, results) => {
+      if (error) throw error;
+      else if (results.rows.length) {
+        return res.json("Username already exists");
+      } else {
+        return res.json("available");
+      }
+    }
+  );
+};
+
+const validateEmail = (req, res) => {
+  const email = req.params.email;
+  pool.query(queries.checkHandymanEmailExists, [email], (error, results) => {
+    if (error) throw error;
+    else if (results.rows.length) {
+      return res.json("Email already exists");
+    } else {
+      return res.json("available");
+    }
+  });
+};
+
 const addHandyman = (req, res) => {
   const {
     username,
@@ -35,6 +63,7 @@ const addHandyman = (req, res) => {
     number_of_years,
     profile_image,
     specialities,
+    about,
   } = req.body;
 
   pool.query(queries.checkHandymanEmailExists, [email], (error, results) => {
@@ -61,6 +90,7 @@ const addHandyman = (req, res) => {
             number_of_years,
             profile_image,
             specialities,
+            about,
           ],
           (error, results) => {
             if (error) throw error;
@@ -133,6 +163,19 @@ const getHandymanRatingsSummary = (req, res) => {
   });
 };
 
+const getHandymanAverageRatingAndTotalJobs = (req, res) => {
+  const id = req.params.id;
+
+  pool.query(
+    queries.getHandymanAverageRatingAndTotalJobs,
+    [id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    }
+  );
+};
+
 module.exports = {
   getHandyman,
   getHandymanById,
@@ -141,4 +184,7 @@ module.exports = {
   getAllRatingsForHMByIdAndStatus,
   getHandymanByUsername,
   getHandymanRatingsSummary,
+  validateUsername,
+  validateEmail,
+  getHandymanAverageRatingAndTotalJobs,
 };

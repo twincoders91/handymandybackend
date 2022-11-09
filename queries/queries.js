@@ -18,7 +18,7 @@ const checkHandymanEmailExists =
 const checkHandymanUsernameExists =
   "SELECT s FROM hm_profile s WHERE s.username = $1";
 const addHandyman =
-  "INSERT INTO hm_profile (username, first_name, last_name, email, business_name, number_of_years, profile_image, specialities) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+  "INSERT INTO hm_profile (username, first_name, last_name, email, business_name, number_of_years, profile_image, specialities, about) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
 const updateHandyman =
   "UPDATE hm_profile SET first_name = $1, last_name = $2, email = $3, business_name = $4, number_of_years = $5, profile_image = $6, specialities = $7 WHERE id = $8";
 // SELECT service_categories.name, hm_profile.specialities FROM hm_profile
@@ -53,14 +53,15 @@ const filterJobRequestByHMWithUserProfile =
 // const filterJobRequestByHMWithUserProfile =
 //   "SELECT hm_profile.id AS hm_id, user_profile.id AS user_id, hm_profile.first_name AS hm_first_name, user_profile.first_name AS user_first_name FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 
-// =============================REVIEWS=============================
-// const getReviews = "SELECT * FROM reviews";
-
 // =============================RATINGS=============================
 const getAllRatingsForHMByIdAndStatus =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'pending' AND hm_id = $1";
 const getHandymanRatingsSummary =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
+const getHandymanAverageRatingAndTotalJobs =
+  "SELECT hm_id, SUM(ratings) AS total_ratings, COUNT(*) AS total_jobs, ROUND(SUM(ratings)/COUNT(*), 1) AS average_rating FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id WHERE jobs.status_id = 'completed' AND hm_id = $1 GROUP BY hm_id";
+const createUserRatingsByJobID =
+  "INSERT INTO ratings_and_reviews (ratings, reviews, jobs_id) VALUES ($1, $2, $3)";
 // ==================================================================
 
 module.exports = {
@@ -93,5 +94,6 @@ module.exports = {
   getHandymanRatingsSummary,
   filterJobRequestsByHM,
   filterJobRequestByHMWithUserProfile,
-  // getReviews,
+  createUserRatingsByJobID,
+  getHandymanAverageRatingAndTotalJobs,
 };
