@@ -28,6 +28,18 @@ const validateUsername = (req, res) => {
   });
 };
 
+const validateEmail = (req, res) => {
+  const email = req.params.email;
+  pool.query(queries.checkEmailExists, [email], (error, results) => {
+    if (error) throw error;
+    else if (results.rows.length) {
+      return res.json("Email already exists");
+    } else {
+      return res.json("available");
+    }
+  });
+};
+
 const addUser = (req, res) => {
   const {
     username,
@@ -150,4 +162,5 @@ module.exports = {
   removeUser,
   updateUser,
   createUserRatings,
+  validateEmail,
 };
