@@ -9,6 +9,14 @@ const getHandyman = (req, res) => {
   });
 };
 
+const getHandymanID = (req, res) => {
+  const username = req.params.username;
+  pool.query(queries.getHandymanID, [username], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows[0]);
+  });
+};
+
 const getHandymanByUsername = (req, res) => {
   const username = req.params.username;
   pool.query(queries.getHandymanByUsername, [username], (error, results) => {
@@ -178,6 +186,7 @@ const getHandymanAverageRatingAndTotalJobs = (req, res) => {
 
 module.exports = {
   getHandyman,
+  getHandymanID,
   getHandymanById,
   addHandyman,
   updateHandyman,

@@ -10,6 +10,7 @@ const removeUser = "DELETE FROM user_profile WHERE id = $1";
 const updateUser =
   "UPDATE user_profile SET first_name = $1, last_name = $2, email = $3, street_address = $4, block_number = $5, postal_code = $6, profile_image = $7 WHERE id = $8";
 // =============================HANDYMAN=============================
+const getHandymanID = "SELECT id FROM hm_profile WHERE username = $1";
 const getHandyman = "SELECT * FROM hm_profile";
 const getHandymanById = "SELECT * FROM hm_profile WHERE id = $1";
 const getHandymanByUsername = "SELECT * FROM hm_profile WHERE username = $1";
@@ -28,11 +29,13 @@ const updateHandyman =
 const getServices = "SELECT * FROM hm_services";
 const getServiceInfo =
   "SELECT * FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.id=$1";
+const getServicesByHMId =
+  "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_id=$1";
 const addServices =
-  "INSERT INTO hm_services (hm_id, description, category, types_of_work, price_from) VALUES ($1, $2, $3, $4, $5)";
+  "INSERT INTO hm_services (hm_id, description, category, types_of_work, price_from, title) VALUES ($1, $2, $3, $4, $5, $6)";
 const removeServicesById = "DELETE FROM hm_services WHERE id = $1";
 const updateServicesById =
-  "UPDATE hm_services SET description = $1, category = $2, types_of_work = $3, price_from = $4 WHERE id = $5";
+  "UPDATE hm_services SET description = $1, category = $2, types_of_work = $3, price_from = $4, title=$5 WHERE id = $6";
 const filterServicesByCategory =
   "SELECT * FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.category = $1";
 
@@ -78,6 +81,7 @@ module.exports = {
   checkHandymanUsernameExists,
   addHandyman,
   getServices,
+  getServicesByHMId,
   addServices,
   getServiceInfo,
   removeServicesById,
@@ -96,4 +100,5 @@ module.exports = {
   filterJobRequestByHMWithUserProfile,
   createUserRatingsByJobID,
   getHandymanAverageRatingAndTotalJobs,
+  getHandymanID,
 };

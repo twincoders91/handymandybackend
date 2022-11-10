@@ -8,12 +8,21 @@ const getServices = (req, res) => {
   });
 };
 
+const getServicesByHMId = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.getServicesByHMId, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 const addServices = (req, res) => {
-  const { hm_id, description, category, types_of_work, price_from } = req.body;
+  const { hm_id, description, category, types_of_work, price_from, title } =
+    req.body;
 
   pool.query(
     queries.addServices,
-    [hm_id, description, category, types_of_work, price_from],
+    [hm_id, description, category, types_of_work, price_from, title],
     (error, results) => {
       if (error) throw error;
       res.status(201).send("Services created Successfully!");
@@ -43,11 +52,11 @@ const removeServicesById = (req, res) => {
 const updateServicesById = (req, res) => {
   const id = parseInt(req.body.id);
 
-  const { description, category, types_of_work, price_from } = req.body;
+  const { description, category, types_of_work, price_from, title } = req.body;
 
   pool.query(
     queries.updateServicesById,
-    [description, category, types_of_work, price_from, id],
+    [description, category, types_of_work, price_from, title, id],
     (error, results) => {
       if (error) throw error;
       res.status(200).send("Updated services successfully!");
@@ -66,6 +75,7 @@ const filterServicesByCategory = (req, res) => {
 
 module.exports = {
   getServices,
+  getServicesByHMId,
   addServices,
   getServiceInfo,
   removeServicesById,
