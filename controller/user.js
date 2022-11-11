@@ -8,6 +8,14 @@ const getUser = (req, res) => {
   });
 };
 
+const getUserID = (req, res) => {
+  const username = req.params.username;
+  pool.query(queries.getUserID, [username], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows[0]);
+  });
+};
+
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query(queries.getUserById, [id], (error, results) => {
@@ -158,6 +166,7 @@ module.exports = {
   validateUsername,
   getUser,
   getUserById,
+  getUserID,
   addUser,
   removeUser,
   updateUser,

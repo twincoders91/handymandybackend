@@ -1,4 +1,5 @@
 // =============================USERS=============================
+const getUserID = "SELECT id FROM user_profile WHERE username = $1";
 const getUsers = "SELECT * FROM user_profile";
 const getUserById = "SELECT * FROM user_profile WHERE id = $1";
 const checkEmailExists = "SELECT s FROM user_profile s WHERE s.email = $1";
@@ -101,4 +102,5 @@ module.exports = {
   createUserRatingsByJobID,
   getHandymanAverageRatingAndTotalJobs,
   getHandymanID,
+  getUserID,
 };

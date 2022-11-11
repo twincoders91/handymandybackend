@@ -4,6 +4,7 @@ const controller = require("../controller/user");
 const router = Router();
 
 router.get("/", controller.getUser);
+router.get("/:username/id", controller.getUserID);
 router.post("/", controller.addUser);
 router.get("/validate/:username", controller.validateUsername);
 router.get("/validate/email/:email", controller.validateEmail);
