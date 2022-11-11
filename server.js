@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -7,6 +9,7 @@ const userRoutes = require("./router/userData");
 const handymanRoutes = require("./router/handymanData");
 const servicesRoutes = require("./router/servicesData");
 const jobsRoutes = require("./router/jobsData");
+const loginRoutes = require("./router/userloginData");
 
 //middleware to allow us to POST and get JSON from our endpoints.
 app.use(express.json());
@@ -20,6 +23,7 @@ app.use("/user", userRoutes);
 app.use("/handyman", handymanRoutes);
 app.use("/services", servicesRoutes);
 app.use("/jobs", jobsRoutes);
+app.use("/login", loginRoutes);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);

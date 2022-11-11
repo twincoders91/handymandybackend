@@ -1,3 +1,9 @@
+//==============================LOGIN=============================
+const findProfileByUsername =
+  "SELECT newId FROM users_auth WHERE username = $1";
+const newUserSignUp =
+  "INSERT INTO users_auth (newId, username, password) VALUES ($1, $2, $3) RETURNING username";
+const userLoginAttempt = "SELECT * FROM users_auth u WHERE u.username = $1";
 // =============================USERS=============================
 const getUserID = "SELECT id FROM user_profile WHERE username = $1";
 const getUsers = "SELECT * FROM user_profile";
@@ -59,7 +65,7 @@ const filterJobRequestByHMWithUserProfile =
 
 // =============================RATINGS=============================
 const getAllRatingsForHMByIdAndStatus =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'pending' AND hm_id = $1";
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
 const getHandymanRatingsSummary =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = jobs.user_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
 const getHandymanAverageRatingAndTotalJobs =
@@ -103,4 +109,7 @@ module.exports = {
   getHandymanAverageRatingAndTotalJobs,
   getHandymanID,
   getUserID,
+  findProfileByUsername,
+  newUserSignUp,
+  userLoginAttempt,
 };
