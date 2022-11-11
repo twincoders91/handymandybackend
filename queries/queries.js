@@ -61,7 +61,7 @@ const filterJobRequestByHMWithUserProfile =
 const getAllRatingsForHMByIdAndStatus =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'pending' AND hm_id = $1";
 const getHandymanRatingsSummary =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = jobs.user_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
 const getHandymanAverageRatingAndTotalJobs =
   "SELECT hm_id, SUM(ratings) AS total_ratings, COUNT(*) AS total_jobs, ROUND(SUM(ratings)/COUNT(*), 1) AS average_rating FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id WHERE jobs.status_id = 'completed' AND hm_id = $1 GROUP BY hm_id";
 const createUserRatingsByJobID =
