@@ -51,7 +51,7 @@ const removeServicesById = "DELETE FROM hm_services WHERE id = $1";
 const updateServicesById =
   "UPDATE hm_services SET description = $1, category = $2, types_of_work = $3, price_from = $4, title=$5 WHERE id = $6";
 const filterServicesByCategory =
-  "SELECT * FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.category = $1";
+  "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.category = $1";
 
 // =============================JOBS=============================
 const getJobs = "SELECT * FROM jobs";
