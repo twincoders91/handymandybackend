@@ -35,7 +35,7 @@ const checkHandymanUsernameExists =
 const addHandyman =
   "INSERT INTO hm_profile (username, first_name, last_name, email, business_name, number_of_years, profile_image, specialities, about) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
 const updateHandyman =
-  "UPDATE hm_profile SET first_name = $1, last_name = $2, email = $3, business_name = $4, number_of_years = $5, profile_image = $6, specialities = $7 WHERE id = $8";
+  "UPDATE hm_profile SET first_name = $1, last_name = $2, email = $3, business_name = $4, number_of_years = $5, profile_image = $6, specialities = $7, about = $8 WHERE id = $9";
 // SELECT service_categories.name, hm_profile.specialities FROM hm_profile
 // JOIN service_categories ON hm_profile.specialities = service_categories.id
 

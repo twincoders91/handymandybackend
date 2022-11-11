@@ -129,6 +129,7 @@ const updateHandyman = (req, res) => {
     number_of_years,
     profile_image,
     specialities,
+    about,
   } = req.body;
 
   pool.query(queries.getHandymanById, [id], (error, results) => {
@@ -147,6 +148,7 @@ const updateHandyman = (req, res) => {
         number_of_years,
         profile_image,
         specialities,
+        about,
         id,
       ],
       (error, results) => {
