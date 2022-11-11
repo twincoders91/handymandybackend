@@ -3,6 +3,7 @@ const controller = require("../controller/user");
 
 const router = Router();
 
+router.get("/character/:username", controller.checkCharacterUser);
 router.get("/", controller.getUser);
 router.get("/:username/id", controller.getUserID);
 router.post("/", controller.addUser);

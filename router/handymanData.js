@@ -3,6 +3,7 @@ const controller = require("../controller/handyman");
 
 const router = Router();
 
+router.get("/character/:username", controller.checkCharacterHM);
 router.get("/", controller.getHandyman);
 router.get("/:username/id", controller.getHandymanID);
 router.get("/username/:username", controller.getHandymanByUsername);

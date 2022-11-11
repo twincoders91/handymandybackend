@@ -1,6 +1,14 @@
 const pool = require("../db/db");
 const queries = require("../queries/queries");
 
+const checkCharacterUser = (req, res) => {
+  const username = req.params.username;
+  pool.query(queries.checkCharacterUser, [username], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 const getUser = (req, res) => {
   pool.query(queries.getUsers, (error, results) => {
     if (error) throw error;
@@ -169,6 +177,7 @@ const createUserRatings = (req, res) => {
 //========================================================================
 
 module.exports = {
+  checkCharacterUser,
   validateUsername,
   getUser,
   getUserById,

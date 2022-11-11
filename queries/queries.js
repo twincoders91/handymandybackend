@@ -4,6 +4,13 @@ const findProfileByUsername =
 const newUserSignUp =
   "INSERT INTO users_auth (newId, username, password) VALUES ($1, $2, $3) RETURNING username";
 const userLoginAttempt = "SELECT * FROM users_auth u WHERE u.username = $1";
+const populateUserProfileDetails =
+  "SELECT * FROM user_profile JOIN users_auth ON user_profile.username = users_auth.username WHERE user_profile.username=$1";
+const checkCharacterUser =
+  "SELECT user_profile.username FROM user_profile JOIN users_auth ON user_profile.username = users_auth.username WHERE user_profile.username=$1";
+const checkCharacterHM =
+  "SELECT hm_profile.username FROM hm_profile JOIN users_auth ON hm_profile.username = users_auth.username WHERE hm_profile.username=$1";
+
 // =============================USERS=============================
 const getUserID = "SELECT id FROM user_profile WHERE username = $1";
 const getUsers = "SELECT * FROM user_profile";
@@ -112,4 +119,6 @@ module.exports = {
   findProfileByUsername,
   newUserSignUp,
   userLoginAttempt,
+  checkCharacterUser,
+  checkCharacterHM,
 };

@@ -3,7 +3,7 @@ const controller = require("../controller/userlogin");
 
 const router = Router();
 
-router.get("/signup", controller.signup);
+router.put("/signup", controller.signup);
 router.post("/", controller.login);
 
 module.exports = router;

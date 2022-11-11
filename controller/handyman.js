@@ -2,6 +2,14 @@ const { parse } = require("dotenv");
 const pool = require("../db/db");
 const queries = require("../queries/queries");
 
+const checkCharacterHM = (req, res) => {
+  const username = req.params.username;
+  pool.query(queries.checkCharacterHM, [username], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 const getHandyman = (req, res) => {
   pool.query(queries.getHandyman, (error, results) => {
     if (error) throw error;
@@ -196,4 +204,5 @@ module.exports = {
   validateUsername,
   validateEmail,
   getHandymanAverageRatingAndTotalJobs,
+  checkCharacterHM,
 };
