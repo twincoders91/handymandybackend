@@ -60,7 +60,7 @@ const createJob =
 const removeJobById = "DELETE FROM jobs WHERE id = $1";
 const updateJobById = "UPDATE jobs SET status_id = $1 WHERE id = $2";
 const filterJobRequestsByUser =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.user_id =$1";
+  "SELECT *, jobs.id AS jobs_id FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.user_id =$1";
 const filterJobRequestsByHM =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 const filterJobRequestByHMWithUserProfile =
@@ -77,8 +77,12 @@ const getHandymanRatingsSummary =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = jobs.user_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id JOIN status ON status.job_status = jobs.status_id WHERE jobs.status_id = 'completed' AND hm_id = $1";
 const getHandymanAverageRatingAndTotalJobs =
   "SELECT hm_id, SUM(ratings) AS total_ratings, COUNT(*) AS total_jobs, ROUND(SUM(ratings)/COUNT(*), 1) AS average_rating FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id WHERE jobs.status_id = 'completed' AND hm_id = $1 GROUP BY hm_id";
+const getUserAverageRatingAndTotalJobs =
+  "SELECT user_id, SUM(ratings) AS total_ratings, COUNT(*) AS total_jobs, ROUND(SUM(ratings)/COUNT(*), 1) AS average_rating FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id JOIN ratings_and_reviews ON ratings_and_reviews.jobs_id = jobs.id WHERE jobs.status_id = 'completed' AND user_id = $1 GROUP BY user_id";
 const createUserRatingsByJobID =
   "INSERT INTO ratings_and_reviews (ratings, reviews, jobs_id) VALUES ($1, $2, $3)";
+const removeRatingByJobID =
+  "DELETE FROM ratings_and_reviews WHERE jobs_id = $1";
 // ==================================================================
 
 module.exports = {
@@ -121,4 +125,6 @@ module.exports = {
   userLoginAttempt,
   checkCharacterUser,
   checkCharacterHM,
+  getUserAverageRatingAndTotalJobs,
+  removeRatingByJobID,
 };

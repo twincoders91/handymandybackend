@@ -170,6 +170,19 @@ const createUserRatings = (req, res) => {
   );
 };
 
+const getUserAverageRatingAndTotalJobs = (req, res) => {
+  const id = req.params.id;
+
+  pool.query(
+    queries.getUserAverageRatingAndTotalJobs,
+    [id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    }
+  );
+};
+
 //========================================================================
 //========================================================================
 
@@ -187,4 +200,5 @@ module.exports = {
   updateUser,
   createUserRatings,
   validateEmail,
+  getUserAverageRatingAndTotalJobs,
 };

@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const controller = require("../controller/user");
+const auth = require("../middleware/auth");
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.get("/:id", controller.getUserById);
 router.put("/:id", controller.updateUser);
 router.delete("/:id", controller.removeUser);
 router.post("/ratings", controller.createUserRatings);
+router.get("/:id/ratingssummary", controller.getUserAverageRatingAndTotalJobs);
 
 module.exports = router;

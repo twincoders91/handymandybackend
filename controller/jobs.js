@@ -71,6 +71,14 @@ const filterJobRequestByHMWithUserProfile = (req, res) => {
   );
 };
 
+const removeRatingByJobID = (req, res) => {
+  const id = parseInt(req.body.id);
+  pool.query(queries.removeRatingByJobID, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 module.exports = {
   getJobs,
   createJob,
@@ -79,4 +87,5 @@ module.exports = {
   filterJobRequestsByUser,
   filterJobRequestsByHM,
   filterJobRequestByHMWithUserProfile,
+  removeRatingByJobID,
 };
