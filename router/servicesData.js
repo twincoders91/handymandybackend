@@ -9,6 +9,7 @@ router.get("/:id", controller.getServiceInfo);
 router.get("/handyman/:id", controller.getServicesByHMId);
 router.get("/category/:category", controller.filterServicesByCategory);
 router.delete("/", controller.removeServicesById);
+router.put("/inactive", controller.updateServiceActiveById);
 router.put("/", controller.updateServicesById);
 
 module.exports = router;
