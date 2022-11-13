@@ -9,11 +9,11 @@ const getJobs = (req, res) => {
 };
 
 const createJob = (req, res) => {
-  const { user_id, services_id, status_id } = req.body;
+  const { user_id, services_id, status_id, job_requirement } = req.body;
 
   pool.query(
     queries.createJob,
-    [user_id, services_id, status_id],
+    [user_id, services_id, status_id, job_requirement],
     (error, results) => {
       if (error) throw error;
       res.status(201).send("Job created successfully!");
