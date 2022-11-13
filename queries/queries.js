@@ -62,9 +62,9 @@ const updateJobById = "UPDATE jobs SET status_id = $1 WHERE id = $2";
 const filterJobRequestsByUser =
   "SELECT *, jobs.id AS jobs_id FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.user_id =$1";
 const filterJobRequestsByHM =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+  "SELECT *, jobs.id AS jobs_id FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 const filterJobRequestByHMWithUserProfile =
-  "SELECT *, hm_profile.id AS hm_id, hm_profile.username AS hm_username, hm_profile.first_name AS hm_first_name, hm_profile.last_name AS hm_last_name, hm_profile.email AS hm_email, hm_profile.profile_image AS hm_profile_image FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+  "SELECT *, user_profile.id AS user_id, user_profile.first_name AS user_first_name, user_profile.last_name AS user_last_name, user_profile.email AS user_email, user_profile.username AS user_username, user_profile.street_address AS user_street_address, user_profile.profile_image AS user_profile_image, user_profile.postal_code AS user_postal_code, hm_profile.id AS hm_id, hm_profile.username AS hm_username, hm_profile.first_name AS hm_first_name, hm_profile.last_name AS hm_last_name, hm_profile.email AS hm_email, hm_profile.profile_image AS hm_profile_image FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 // const filterJobRequestByHMWithUserProfile =
 //   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 // const filterJobRequestByHMWithUserProfile =
