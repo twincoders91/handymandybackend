@@ -1,20 +1,25 @@
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const sharp = require("sharp");
+// const {
+//   S3Client,
+//   PutObjectCommand,
+//   GetObjectCommand,
+// } = require("@aws-sdk/client-s3");
+// const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+// const sharp = require("sharp");
 
-//================================AWS S3 BUCKET============================
-const bucketName = process.env.BUCKET_NAME;
-const bucketRegion = process.env.BUCKET_REGION;
-const accessKey = process.env.ACCESS_KEY;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// //================================AWS S3 BUCKET OLD============================
+// const bucketName = process.env.BUCKET_NAME;
+// const bucketRegion = process.env.BUCKET_REGION;
+// const accessKey = process.env.ACCESS_KEY;
+// const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 
-const s3 = new S3Client({
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
-  },
-  region: bucketRegion,
-});
-//============================================================================
+// const s3 = new S3Client({
+//   credentials: {
+//     accessKeyId: accessKey,
+//     secretAccessKey: secretAccessKey,
+//   },
+//   region: bucketRegion,
+// });
+// //============================================================================
 
 const pool = require("../db/db");
 const queries = require("../queries/queries");
@@ -177,35 +182,71 @@ const updateUser = (req, res) => {
   });
 };
 
-const uploadUserProfileImage = async (req, res) => {
-  console.log("req.body", req.body);
-  console.log("req.file", req.file);
+// //==================================AWS===========================================
+// //upload into s3 bucket===========================================================
+// const uploadUserProfileImage = async (req, res) => {
+//   console.log("req.body", req.body);
+//   console.log("req.file", req.file);
 
-  // req.file.buffer;
+//   // req.file.buffer;
 
-  //resize image
-  const buffer = await sharp(req.file.buffer)
-    .resize({
-      height: 300,
-      width: 300,
-      fit: "contain",
-    })
-    .toBuffer();
+//   //resize image
+//   const buffer = await sharp(req.file.buffer)
+//     .resize({
+//       height: 300,
+//       width: 300,
+//       fit: "contain",
+//     })
+//     .toBuffer();
 
-  const params = {
-    Bucket: bucketName,
-    Key: req.file.originalname,
-    Body: buffer,
-    ContentType: req.file.mimetype,
-  };
+//   const profile_image = req.file.originalname;
 
-  const command = new PutObjectCommand(params);
+//   const params = {
+//     Bucket: bucketName,
+//     Key: profile_image,
+//     Body: buffer,
+//     ContentType: req.file.mimetype,
+//   };
 
-  await s3.send(command);
-  //after successfully posted to s3.
+//   const command = new PutObjectCommand(params);
 
-  res.send({});
-};
+//   await s3.send(command);
+//   //after successfully posted to s3.
+
+//   //upload into database
+//   pool.query(
+//     queries.uploadUserProfileImageToDB,
+//     [profile_image],
+//     (error, results) => {
+//       if (error) throw error;
+//       res.status(201).send("Profile image uploaded successfully!");
+//     }
+//   );
+// };
+
+// const getUserProfileImage = async (req, res) => {
+//   try {
+//     const posts = await pool.query(queries.getUserProfileImage);
+
+//     // res.status(200).json(results.rows);
+
+//     for (const post of posts.rows) {
+//       const getObjectParams = {
+//         Bucket: bucketName,
+//         Key: post.profile_image,
+//       };
+//       const command = new GetObjectCommand(getObjectParams);
+//       const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+//       post.imageUrl = url;
+//     }
+
+//     res.send(posts);
+//   } catch (e) {
+//     console.error(e);
+//   }
+// };
+
+// //==================================END OF AWS===========================================
 
 const createUserRatings = (req, res) => {
   const { ratings, reviews, jobs_id } = req.body;
@@ -251,5 +292,6 @@ module.exports = {
   createUserRatings,
   validateEmail,
   getUserAverageRatingAndTotalJobs,
-  uploadUserProfileImage,
+  // uploadUserProfileImage,
+  // getUserProfileImage,
 };

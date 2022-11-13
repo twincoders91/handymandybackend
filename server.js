@@ -29,6 +29,20 @@ const cors = require("cors");
 const app = express();
 const port = 8001;
 
+//================================AWS S3 BUCKET NEW============================
+
+const s3 = require("./s3");
+
+app.use(express.static("front"));
+app.use(cors());
+
+app.get("/s3Url", async (req, res) => {
+  const url = await s3.generateUploadURL();
+  res.send({ url });
+});
+
+//============================================================================
+
 const userRoutes = require("./router/userData");
 const handymanRoutes = require("./router/handymanData");
 const servicesRoutes = require("./router/servicesData");

@@ -87,6 +87,10 @@ const removeRatingByJobID =
 // ==================================================================
 // =============================IMAGES=============================
 const getUserProfileImage = "SELECT * FROM profile_image";
+const uploadUserProfileImageToDB =
+  "INSERT INTO profile_image (profile_image, image_url) VALUES ($1, $2)";
+const updateUserProfileImageToDB =
+  "INSERT INTO profile_image (profile_image, image_url) VALUES ($1, $2)";
 
 module.exports = {
   getUsers,
@@ -131,5 +135,6 @@ module.exports = {
   getUserAverageRatingAndTotalJobs,
   removeRatingByJobID,
   getUserProfileImage,
+  uploadUserProfileImageToDB,
   updateServiceActiveById,
 };
