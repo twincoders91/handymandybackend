@@ -1,5 +1,25 @@
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const sharp = require("sharp");
+
+//================================AWS S3 BUCKET============================
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+  },
+  region: bucketRegion,
+});
+//============================================================================
+
 const pool = require("../db/db");
 const queries = require("../queries/queries");
+
+//===========================================================================
 
 const checkCharacterUser = (req, res) => {
   const username = req.params.username;
@@ -157,6 +177,36 @@ const updateUser = (req, res) => {
   });
 };
 
+const uploadUserProfileImage = async (req, res) => {
+  console.log("req.body", req.body);
+  console.log("req.file", req.file);
+
+  // req.file.buffer;
+
+  //resize image
+  const buffer = await sharp(req.file.buffer)
+    .resize({
+      height: 300,
+      width: 300,
+      fit: "contain",
+    })
+    .toBuffer();
+
+  const params = {
+    Bucket: bucketName,
+    Key: req.file.originalname,
+    Body: buffer,
+    ContentType: req.file.mimetype,
+  };
+
+  const command = new PutObjectCommand(params);
+
+  await s3.send(command);
+  //after successfully posted to s3.
+
+  res.send({});
+};
+
 const createUserRatings = (req, res) => {
   const { ratings, reviews, jobs_id } = req.body;
 
@@ -201,4 +251,5 @@ module.exports = {
   createUserRatings,
   validateEmail,
   getUserAverageRatingAndTotalJobs,
+  uploadUserProfileImage,
 };

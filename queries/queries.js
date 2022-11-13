@@ -84,6 +84,8 @@ const createUserRatingsByJobID =
 const removeRatingByJobID =
   "DELETE FROM ratings_and_reviews WHERE jobs_id = $1";
 // ==================================================================
+// =============================IMAGES=============================
+const getUserProfileImage = "SELECT * FROM profile_image";
 
 module.exports = {
   getUsers,
@@ -127,4 +129,5 @@ module.exports = {
   checkCharacterHM,
   getUserAverageRatingAndTotalJobs,
   removeRatingByJobID,
+  getUserProfileImage,
 };
