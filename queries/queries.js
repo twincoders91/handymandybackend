@@ -44,7 +44,7 @@ const getServices = "SELECT * FROM hm_services";
 const getServiceInfo =
   "SELECT * FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.id=$1";
 const getServicesByHMId =
-  "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_id=$1";
+  "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_id=$1  AND hm_services.active = 'live'";
 const addServices =
   "INSERT INTO hm_services (hm_id, description, category, types_of_work, price_from, title) VALUES ($1, $2, $3, $4, $5, $6)";
 const removeServicesById = "DELETE FROM hm_services WHERE id = $1";
@@ -52,7 +52,8 @@ const updateServicesById =
   "UPDATE hm_services SET description = $1, category = $2, types_of_work = $3, price_from = $4, title=$5 WHERE id = $6";
 const filterServicesByCategory =
   "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.category = $1";
-
+const updateServiceActiveById =
+  "UPDATE hm_services SET active = 'inactive' WHERE id = $1";
 // =============================JOBS=============================
 const getJobs = "SELECT * FROM jobs";
 const createJob =
@@ -130,4 +131,5 @@ module.exports = {
   getUserAverageRatingAndTotalJobs,
   removeRatingByJobID,
   getUserProfileImage,
+  updateServiceActiveById,
 };

@@ -64,6 +64,15 @@ const updateServicesById = (req, res) => {
   );
 };
 
+const updateServiceActiveById = (req, res) => {
+  const id = parseInt(req.body.id);
+
+  pool.query(queries.updateServiceActiveById, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).send("Service is not in-active");
+  });
+};
+
 const filterServicesByCategory = (req, res) => {
   const { category } = req.params;
 
@@ -81,4 +90,5 @@ module.exports = {
   removeServicesById,
   updateServicesById,
   filterServicesByCategory,
+  updateServiceActiveById,
 };
