@@ -86,11 +86,8 @@ const removeRatingByJobID =
   "DELETE FROM ratings_and_reviews WHERE jobs_id = $1";
 // ==================================================================
 // =============================IMAGES=============================
-const getUserProfileImage = "SELECT * FROM profile_image";
-const uploadUserProfileImageToDB =
-  "INSERT INTO profile_image (profile_image, image_url) VALUES ($1, $2)";
-const updateUserProfileImageToDB =
-  "INSERT INTO profile_image (profile_image, image_url) VALUES ($1, $2)";
+const createProfileImage =
+  "INSERT INTO profile_image (image_url, user_id, hm_id) VALUES ($1, $2, $3)";
 
 module.exports = {
   getUsers,
@@ -134,7 +131,6 @@ module.exports = {
   checkCharacterHM,
   getUserAverageRatingAndTotalJobs,
   removeRatingByJobID,
-  getUserProfileImage,
-  uploadUserProfileImageToDB,
   updateServiceActiveById,
+  createProfileImage,
 };

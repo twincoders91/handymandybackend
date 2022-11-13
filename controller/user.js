@@ -292,6 +292,4 @@ module.exports = {
   createUserRatings,
   validateEmail,
   getUserAverageRatingAndTotalJobs,
-  // uploadUserProfileImage,
-  // getUserProfileImage,
 };

@@ -48,6 +48,7 @@ const handymanRoutes = require("./router/handymanData");
 const servicesRoutes = require("./router/servicesData");
 const jobsRoutes = require("./router/jobsData");
 const loginRoutes = require("./router/userloginData");
+const profileImageRoutes = require("./router/profileimageData");
 
 //middleware to allow us to POST and get JSON from our endpoints.
 app.use(express.json());
@@ -62,6 +63,7 @@ app.use("/handyman", handymanRoutes);
 app.use("/services", servicesRoutes);
 app.use("/jobs", jobsRoutes);
 app.use("/login", loginRoutes);
+app.use("/profileimage", profileImageRoutes);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);
