@@ -1,7 +1,4 @@
-// const dotenv = require("dotenv");
 const aws = require("aws-sdk");
-
-// dotenv.config();
 
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;

@@ -24,7 +24,7 @@ const removeUser = "DELETE FROM user_profile WHERE id = $1";
 const updateUser =
   "UPDATE user_profile SET first_name = $1, last_name = $2, email = $3, street_address = $4, block_number = $5, postal_code = $6, profile_image = $7 WHERE id = $8";
 const updateProfileImageById =
-  "SELECT * FROM user_profile JOIN profile_image ON user_profile.id = profile_image.user_id WHERE user_profile.id = $1";
+  "SELECT *, profile_image.image_url AS image_url FROM user_profile JOIN profile_image ON user_profile.id = profile_image.user_id WHERE user_profile.id = $1";
 // =============================HANDYMAN=============================
 const getHandymanID = "SELECT id FROM hm_profile WHERE username = $1";
 const getHandyman = "SELECT * FROM hm_profile";
