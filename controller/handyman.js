@@ -194,6 +194,14 @@ const getHandymanAverageRatingAndTotalJobs = (req, res) => {
   );
 };
 
+const updateHMProfileImageById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.updateHMProfileImageById, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 module.exports = {
   getHandyman,
   getHandymanID,
@@ -207,4 +215,5 @@ module.exports = {
   validateEmail,
   getHandymanAverageRatingAndTotalJobs,
   checkCharacterHM,
+  updateHMProfileImageById,
 };
