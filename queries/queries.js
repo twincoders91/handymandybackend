@@ -101,12 +101,8 @@ const updateHMProfileImageTable =
   "UPDATE profile_image SET image_url = $1 WHERE hm_id = $2";
 
 // =============================SERVICE IMAGES=============================
-const createServiceImage =
-  "INSERT INTO service_image (image_url, hm_services) VALUES ($1, $2)";
-// const updateProfileImageTable =
-// "UPDATE profile_image SET image_url = $1 WHERE user_id = $2";
-// const updateHMProfileImageTable =
-// "UPDATE profile_image SET image_url = $1 WHERE hm_id = $2";
+// const createServiceImage =
+//   "INSERT INTO service_image (image_url, hm_services) VALUES ($1, $2)";
 
 module.exports = {
   getUsers,
@@ -158,5 +154,5 @@ module.exports = {
   updateHMProfileImageTable,
   getUserProfileImageById,
   getHMProfileImageById,
-  createServiceImage,
+  // createServiceImage,
 };
