@@ -17,12 +17,19 @@ const getServicesByHMId = (req, res) => {
 };
 
 const addServices = (req, res) => {
-  const { hm_id, description, category, types_of_work, price_from, title } =
-    req.body;
+  const {
+    hm_id,
+    description,
+    category,
+    types_of_work,
+    price_from,
+    title,
+    image_url,
+  } = req.body;
 
   pool.query(
     queries.addServices,
-    [hm_id, description, category, types_of_work, price_from, title],
+    [hm_id, description, category, types_of_work, price_from, title, image_url],
     (error, results) => {
       if (error) throw error;
       res.status(201).send("Services created Successfully!");
