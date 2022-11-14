@@ -284,7 +284,13 @@ const updateProfileImageById = (req, res) => {
 };
 
 //========================================================================
-
+const getUserProfileImageById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.getUserProfileImageById, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
 //========================================================================
 //========================================================================
 
@@ -301,4 +307,5 @@ module.exports = {
   validateEmail,
   getUserAverageRatingAndTotalJobs,
   updateProfileImageById,
+  getUserProfileImageById,
 };
