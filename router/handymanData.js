@@ -19,5 +19,6 @@ router.get(
   controller.getHandymanAverageRatingAndTotalJobs
 );
 router.get("/:id/profileimage", controller.updateHMProfileImageById);
+router.get("/:id/profileimage/any", controller.getHMProfileImageById);
 
 module.exports = router;

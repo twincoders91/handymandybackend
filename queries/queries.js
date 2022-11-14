@@ -43,7 +43,8 @@ const updateHandyman =
   "UPDATE hm_profile SET first_name = $1, last_name = $2, email = $3, business_name = $4, number_of_years = $5, profile_image = $6, specialities = $7, about = $8 WHERE id = $9";
 const updateHMProfileImageById =
   "SELECT *, profile_image.image_url AS image_url FROM hm_profile JOIN profile_image ON hm_profile.id = profile_image.hm_id WHERE hm_profile.id = $1";
-
+const getHMProfileImageById =
+  "SELECT profile_image.image_url AS image_url FROM profile_image WHERE profile_image.hm_id = $1";
 // =============================SERVICES=============================
 const getServices = "SELECT * FROM hm_services";
 const getServiceInfo =
@@ -148,4 +149,5 @@ module.exports = {
   updateHMProfileImageById,
   updateHMProfileImageTable,
   getUserProfileImageById,
+  getHMProfileImageById,
 };

@@ -69,6 +69,8 @@ const validateEmail = (req, res) => {
   });
 };
 
+//========================================================================
+
 const addHandyman = (req, res) => {
   const {
     username,
@@ -118,6 +120,7 @@ const addHandyman = (req, res) => {
     );
   });
 };
+//========================================================================
 
 const updateHandyman = (req, res) => {
   const id = parseInt(req.body.id);
@@ -158,6 +161,7 @@ const updateHandyman = (req, res) => {
     );
   });
 };
+//========================================================================
 
 const getAllRatingsForHMByIdAndStatus = (req, res) => {
   const id = parseInt(req.params.id);
@@ -171,6 +175,7 @@ const getAllRatingsForHMByIdAndStatus = (req, res) => {
     }
   );
 };
+//========================================================================
 
 const getHandymanRatingsSummary = (req, res) => {
   const id = req.params.id;
@@ -180,6 +185,8 @@ const getHandymanRatingsSummary = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
+
+//========================================================================
 
 const getHandymanAverageRatingAndTotalJobs = (req, res) => {
   const id = req.params.id;
@@ -194,9 +201,21 @@ const getHandymanAverageRatingAndTotalJobs = (req, res) => {
   );
 };
 
+//========================================================================
+
 const updateHMProfileImageById = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query(queries.updateHMProfileImageById, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
+//========================================================================
+
+const getHMProfileImageById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.getHMProfileImageById, [id], (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
@@ -216,4 +235,5 @@ module.exports = {
   getHandymanAverageRatingAndTotalJobs,
   checkCharacterHM,
   updateHMProfileImageById,
+  getHMProfileImageById,
 };
