@@ -96,6 +96,8 @@ const createProfileImage =
   "INSERT INTO profile_image (image_url, user_id, hm_id) VALUES ($1, $2, $3)";
 const updateProfileImageTable =
   "UPDATE profile_image SET image_url = $1 WHERE user_id = $2";
+const updateHMProfileImageTable =
+  "UPDATE profile_image SET image_url = $1 WHERE hm_id = $2";
 
 module.exports = {
   getUsers,
@@ -144,5 +146,6 @@ module.exports = {
   updateProfileImageById,
   updateProfileImageTable,
   updateHMProfileImageById,
+  updateHMProfileImageTable,
   getUserProfileImageById,
 };

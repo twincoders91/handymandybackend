@@ -28,7 +28,22 @@ const updateProfileImageTable = (req, res) => {
   );
 };
 
+const updateHMProfileImageTable = (req, res) => {
+  const hm_id = parseInt(req.body.hm_id);
+  const { image_url } = req.body;
+
+  pool.query(
+    queries.updateHMProfileImageTable,
+    [image_url, hm_id],
+    (error, results) => {
+      if (error) throw error;
+      res.status(200).send("HM Profile Image updated successfully!");
+    }
+  );
+};
+
 module.exports = {
   createProfileImage,
   updateProfileImageTable,
+  updateHMProfileImageTable,
 };
