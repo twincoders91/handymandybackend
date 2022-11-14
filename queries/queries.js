@@ -25,6 +25,9 @@ const updateUser =
   "UPDATE user_profile SET first_name = $1, last_name = $2, email = $3, street_address = $4, block_number = $5, postal_code = $6, profile_image = $7 WHERE id = $8";
 const updateProfileImageById =
   "SELECT *, profile_image.image_url AS image_url FROM user_profile JOIN profile_image ON user_profile.id = profile_image.user_id WHERE user_profile.id = $1";
+const getUserProfileImageById =
+  " SELECT profile_image.image_url AS image_url FROM profile_image WHERE profile_image.user_id = $1";
+
 // =============================HANDYMAN=============================
 const getHandymanID = "SELECT id FROM hm_profile WHERE username = $1";
 const getHandyman = "SELECT * FROM hm_profile";
@@ -68,6 +71,7 @@ const filterJobRequestsByHM =
   "SELECT *, jobs.id AS jobs_id FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 const filterJobRequestByHMWithUserProfile =
   "SELECT *, jobs.id AS jobs_id, user_profile.id AS user_id, user_profile.first_name AS user_first_name, user_profile.last_name AS user_last_name, user_profile.email AS user_email, user_profile.username AS user_username, user_profile.street_address AS user_street_address, user_profile.profile_image AS user_profile_image, user_profile.postal_code AS user_postal_code, hm_profile.id AS hm_id, hm_profile.username AS hm_username, hm_profile.first_name AS hm_first_name, hm_profile.last_name AS hm_last_name, hm_profile.email AS hm_email, hm_profile.profile_image AS hm_profile_image FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
+
 // const filterJobRequestByHMWithUserProfile =
 //   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN user_profile ON user_profile.id = user_id JOIN status ON status.job_status = jobs.status_id WHERE hm_id =$1";
 // const filterJobRequestByHMWithUserProfile =
@@ -140,4 +144,5 @@ module.exports = {
   updateProfileImageById,
   updateProfileImageTable,
   updateHMProfileImageById,
+  getUserProfileImageById,
 };

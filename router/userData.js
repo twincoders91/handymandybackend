@@ -26,6 +26,7 @@ router.delete("/:id", controller.removeUser);
 router.post("/ratings", controller.createUserRatings);
 router.get("/:id/ratingssummary", controller.getUserAverageRatingAndTotalJobs);
 router.get("/:id/profileimage", controller.updateProfileImageById);
+router.get("/:id/profileimage/any", controller.getUserProfileImageById);
 
 // router.post(
 //   "/profileimage",
