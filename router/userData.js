@@ -25,6 +25,8 @@ router.put("/:id", controller.updateUser);
 router.delete("/:id", controller.removeUser);
 router.post("/ratings", controller.createUserRatings);
 router.get("/:id/ratingssummary", controller.getUserAverageRatingAndTotalJobs);
+router.get("/:username/id/profileimage", controller.updateProfileImageById);
+
 // router.post(
 //   "/profileimage",
 //   upload.single("image"),
