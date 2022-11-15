@@ -109,9 +109,11 @@ const createMessage =
 const filterMessageByJobId = "SELECT * FROM inbox WHERE jobs_id =$1";
 // =============================NOTIFICATIONS=============================
 const userNotifications =
-  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = services_id JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE (status_id = 'inprogress' OR status_id = 'cancelled') AND user_id =$1 AND user_ack='before'";
+  "SELECT * FROM jobs JOIN hm_services ON hm_services.id = services_id JOIN hm_profile ON hm_profile.id = hm_services.hm_id LEFT OUTER JOIN profile_image ON hm_profile.id = profile_image.hm_id WHERE (status_id = 'inprogress' OR status_id = 'cancelled') AND jobs.user_id =$1 AND user_ack='before'";
 const updateUserNotifications =
   "UPDATE jobs SET user_ack = 'after' WHERE user_id =$1 AND status_id = 'inprogress' OR status_id = 'cancelled'";
+const handymanNotifications =
+  "SELECT *  FROM jobs JOIN user_profile ON user_profile.id = user_id JOIN hm_services ON hm_services.id = services_id LEFT OUTER JOIN profile_image ON profile_image.user_id = jobs.user_id WHERE (status_id = 'pending' OR status_id = 'completed') AND hm_services.hm_id = $1 AND hm_ack = 'before'";
 
 module.exports = {
   getUsers,
