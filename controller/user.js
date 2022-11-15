@@ -299,6 +299,14 @@ const userNotifications = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
+
+const updateUserNotifications = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.updateUserNotifications, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).send("User Notifications updated successfully!");
+  });
+};
 //========================================================================
 
 module.exports = {
@@ -316,4 +324,5 @@ module.exports = {
   updateProfileImageById,
   getUserProfileImageById,
   userNotifications,
+  updateUserNotifications,
 };

@@ -28,5 +28,6 @@ router.get("/:id/ratingssummary", controller.getUserAverageRatingAndTotalJobs);
 router.get("/:id/profileimage", controller.updateProfileImageById);
 router.get("/:id/profileimage/any", controller.getUserProfileImageById);
 router.get("/notifications/:id", controller.userNotifications);
+router.put("/notifications/:id", controller.updateUserNotifications);
 
 module.exports = router;
