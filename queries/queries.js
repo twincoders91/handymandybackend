@@ -111,7 +111,7 @@ const filterMessageByJobId = "SELECT * FROM inbox WHERE jobs_id =$1";
 const userNotifications =
   "SELECT * FROM jobs JOIN hm_services ON hm_services.id = services_id JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE (status_id = 'inprogress' OR status_id = 'cancelled') AND user_id =$1 AND user_ack='before'";
 const updateUserNotifications =
-  "UPDATE jobs SET user_ack = 'after' WHERE user_id =$1 AND status_id = 'inprogress'";
+  "UPDATE jobs SET user_ack = 'after' WHERE user_id =$1 AND status_id = 'inprogress' OR status_id = 'cancelled'";
 
 module.exports = {
   getUsers,
