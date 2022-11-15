@@ -89,6 +89,13 @@ const filterServicesByCategory = (req, res) => {
   });
 };
 
+const filterCountTotalJobs = (req, res) => {
+  pool.query(queries.filterCountTotalJobs, (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
 module.exports = {
   getServices,
   getServicesByHMId,
@@ -98,4 +105,5 @@ module.exports = {
   updateServicesById,
   filterServicesByCategory,
   updateServiceActiveById,
+  filterCountTotalJobs,
 };
