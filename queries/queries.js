@@ -48,7 +48,7 @@ const getHMProfileImageById =
 // =============================SERVICES=============================
 const getServices = "SELECT * FROM hm_services";
 const getServiceInfo =
-  "SELECT * FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.id=$1";
+  "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.id=$1";
 const getServicesByHMId =
   "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_id=$1  AND hm_services.active = 'live'";
 const addServices =
@@ -60,6 +60,9 @@ const filterServicesByCategory =
   "SELECT *, hm_services.id AS services_id FROM hm_services JOIN hm_profile ON hm_profile.id = hm_services.hm_id WHERE hm_services.category = $1";
 const updateServiceActiveById =
   "UPDATE hm_services SET active = 'inactive' WHERE id = $1";
+const filterCountTotalJobs =
+  "SELECT services_id AS services_id, COUNT(services_id) AS total_jobs FROM jobs GROUP BY services_id";
+
 // =============================JOBS=============================
 const getJobs = "SELECT * FROM jobs";
 const createJob =
@@ -100,6 +103,10 @@ const updateProfileImageTable =
 const updateHMProfileImageTable =
   "UPDATE profile_image SET image_url = $1 WHERE hm_id = $2";
 
+// =============================INBOX=============================
+const createMessage =
+  "INSERT INTO inbox (jobs_id, user_id, hm_id, character, message) VALUES ($1, $2, $3, $4, $5)";
+const filterMessageByJobId = "SELECT * FROM inbox WHERE jobs_id =$1";
 // =============================NOTIFICATIONS=============================
 const userNotifications =
   "SELECT * FROM jobs WHERE (status_id = 'inprogress' OR status_id = 'cancelled') AND user_id =$1";
@@ -154,5 +161,8 @@ module.exports = {
   updateHMProfileImageTable,
   getUserProfileImageById,
   getHMProfileImageById,
+  filterCountTotalJobs,
+  createMessage,
+  filterMessageByJobId,
   userNotifications,
 };
