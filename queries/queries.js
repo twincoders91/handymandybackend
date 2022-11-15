@@ -100,9 +100,9 @@ const updateProfileImageTable =
 const updateHMProfileImageTable =
   "UPDATE profile_image SET image_url = $1 WHERE hm_id = $2";
 
-// =============================SERVICE IMAGES=============================
-// const createServiceImage =
-//   "INSERT INTO service_image (image_url, hm_services) VALUES ($1, $2)";
+// =============================NOTIFICATIONS=============================
+const userNotifications =
+  "SELECT * FROM jobs WHERE (status_id = 'inprogress' OR status_id = 'cancelled') AND user_id =$1";
 
 module.exports = {
   getUsers,
@@ -154,5 +154,5 @@ module.exports = {
   updateHMProfileImageTable,
   getUserProfileImageById,
   getHMProfileImageById,
-  // createServiceImage,
+  userNotifications,
 };

@@ -292,6 +292,13 @@ const getUserProfileImageById = (req, res) => {
   });
 };
 //========================================================================
+const userNotifications = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.userNotifications, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
 //========================================================================
 
 module.exports = {
@@ -308,4 +315,5 @@ module.exports = {
   getUserAverageRatingAndTotalJobs,
   updateProfileImageById,
   getUserProfileImageById,
+  userNotifications,
 };
