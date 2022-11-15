@@ -107,9 +107,9 @@ const updateHMProfileImageTable =
 const createMessage =
   "INSERT INTO inbox (jobs_id, user_id, hm_id, character, message) VALUES ($1, $2, $3, $4, $5)";
 const filterMessageByJobId = "SELECT * FROM inbox WHERE jobs_id =$1";
-// =============================SERVICE IMAGES=============================
-// const createServiceImage =
-//   "INSERT INTO service_image (image_url, hm_services) VALUES ($1, $2)";
+// =============================NOTIFICATIONS=============================
+const userNotifications =
+  "SELECT * FROM jobs WHERE (status_id = 'inprogress' OR status_id = 'cancelled') AND user_id =$1";
 
 module.exports = {
   getUsers,
@@ -164,5 +164,5 @@ module.exports = {
   filterCountTotalJobs,
   createMessage,
   filterMessageByJobId,
-  // createServiceImage,
+  userNotifications,
 };
