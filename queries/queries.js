@@ -114,6 +114,8 @@ const updateUserNotifications =
   "UPDATE jobs SET user_ack = 'after' WHERE user_id =$1 AND status_id = 'inprogress' OR status_id = 'cancelled'";
 const handymanNotifications =
   "SELECT *  FROM jobs JOIN user_profile ON user_profile.id = user_id JOIN hm_services ON hm_services.id = services_id LEFT OUTER JOIN profile_image ON profile_image.user_id = jobs.user_id WHERE (status_id = 'pending' OR status_id = 'completed') AND hm_services.hm_id = $1 AND hm_ack = 'before'";
+const updateHMNotifications =
+  "UPDATE jobs SET hm_ack = 'after' WHERE services_id IN (SELECT id FROM hm_services WHERE hm_services.hm_id = $1) AND (status_id = 'pending' OR status_id = 'completed')";
 
 module.exports = {
   getUsers,
@@ -170,4 +172,6 @@ module.exports = {
   filterMessageByJobId,
   userNotifications,
   updateUserNotifications,
+  handymanNotifications,
+  updateHMNotifications,
 };

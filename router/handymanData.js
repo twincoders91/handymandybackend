@@ -20,5 +20,7 @@ router.get(
 );
 router.get("/:id/profileimage", controller.updateHMProfileImageById);
 router.get("/:id/profileimage/any", controller.getHMProfileImageById);
+router.get("/notifications/:id", controller.handymanNotifications);
+router.put("/notifications/:id", controller.updateHMNotifications);
 
 module.exports = router;

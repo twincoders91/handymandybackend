@@ -221,6 +221,23 @@ const getHMProfileImageById = (req, res) => {
   });
 };
 
+//========================================================================
+const handymanNotifications = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.handymanNotifications, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  });
+};
+
+const updateHMNotifications = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.updateHMNotifications, [id], (error, results) => {
+    if (error) throw error;
+    res.status(200).send("Handyman Notifications updated successfully!");
+  });
+};
+
 module.exports = {
   getHandyman,
   getHandymanID,
@@ -236,4 +253,6 @@ module.exports = {
   checkCharacterHM,
   updateHMProfileImageById,
   getHMProfileImageById,
+  handymanNotifications,
+  updateHMNotifications,
 };
