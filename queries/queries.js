@@ -102,6 +102,8 @@ const updateProfileImageTable =
   "UPDATE profile_image SET image_url = $1 WHERE user_id = $2";
 const updateHMProfileImageTable =
   "UPDATE profile_image SET image_url = $1 WHERE hm_id = $2";
+const createInboxImage =
+  "INSERT INTO inbox (jobs_id, user_id, hm_id, character, inboximage_url) VALUES ($1, $2, $3, $4, $5)";
 
 // =============================INBOX=============================
 const createMessage =
@@ -174,4 +176,5 @@ module.exports = {
   updateUserNotifications,
   handymanNotifications,
   updateHMNotifications,
+  createInboxImage,
 };

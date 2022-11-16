@@ -15,6 +15,19 @@ const createMessage = (req, res) => {
   );
 };
 
+const createInboxImage = (req, res) => {
+  const { jobs_id, user_id, hm_id, character, inboximage_url } = req.body;
+
+  pool.query(
+    queries.createInboxImage,
+    [jobs_id, user_id, hm_id, character, inboximage_url],
+    (error, results) => {
+      if (error) throw error;
+      res.status(201).send("Inbox Image created successfully!");
+    }
+  );
+};
+
 const filterMessageByJobId = (req, res) => {
   const { jobs_id } = req.params;
 
@@ -27,4 +40,5 @@ const filterMessageByJobId = (req, res) => {
 module.exports = {
   createMessage,
   filterMessageByJobId,
+  createInboxImage,
 };
