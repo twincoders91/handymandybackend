@@ -68,7 +68,8 @@ const getJobs = "SELECT * FROM jobs";
 const createJob =
   "INSERT INTO jobs (user_id, services_id, status_id, job_requirement) VALUES ($1, $2, $3, $4)";
 const removeJobById = "DELETE FROM jobs WHERE id = $1";
-const updateJobById = "UPDATE jobs SET status_id = $1 WHERE id = $2";
+const updateJobById =
+  "UPDATE jobs SET status_id = $1, user_ack = 'before', hm_ack = 'before' WHERE id = $2";
 const filterJobRequestsByUser =
   "SELECT *, hm_profile.first_name AS hm_first_name, jobs.id AS jobs_id FROM jobs JOIN hm_services ON hm_services.id = jobs.services_id JOIN hm_profile ON hm_profile.id = hm_id JOIN status ON status.job_status = jobs.status_id WHERE jobs.user_id =$1";
 const filterJobRequestsByHM =
